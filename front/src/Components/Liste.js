@@ -2,7 +2,6 @@ import React from "react";
 
 
 export default function Liste(props) {
-  console.log(props)
   return (
     <table className="table mx-auto w-75">
       <thead>
@@ -18,7 +17,7 @@ export default function Liste(props) {
       <tbody>
         {props.laptimes.map((laptime) => {
           return (
-            <tr>
+            <tr key={laptime.id}>
               <th scope="row">{laptime.id}</th>
               <td>{laptime.Pilote}</td>
               <td>{laptime.Circuit}</td>

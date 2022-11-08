@@ -1,17 +1,3 @@
-// import React from 'react'
-// import Liste from './Components/Liste'
-
-// export default function App() {
-//   return (
-//     <div className='d-flex flex-column align-items-center justify-content-center'>
-//       <h1 className='text-center'>LAPS RECORDED</h1>
-//       <button className="btn btn-outline-success w-75 my-3 text-uppercase">Add a new lap record</button>
-//       <Liste/>
-//     </div>
-//   )
-// }
-
-
 import React from 'react';
 import { BrowserRouter as Router, Link, Routes, Route, useNavigate } from 'react-router-dom';
 import CreateLap from './Components/CreateLap';
@@ -34,6 +20,11 @@ function App() {
     });
   }, []);
 
+
+  const addLaptime = (newLaptime) => {
+    setLaptimes((prevLaptimes) => [...prevLaptimes, newLaptime])
+  }
+
   return (
     <Router>
       <div>
@@ -45,11 +36,12 @@ function App() {
             <li>
               <Link className="btn btn-outline-primary text-uppercase m-3"  to="/create">Add a Laptime</Link>
             </li>
+              <h1 classname='text-uppercase'>Recorded Laps</h1>
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<Liste laptime={laptimes}/>}/>
-          <Route path="/create" element={<CreateLap/>}/>
+          <Route path="/" element={<Liste laptimes={laptimes}/>}/>
+          <Route path="/create" element={<CreateLap addLaptime={addLaptime} />}/>
           <Route path="/book/edit/:id" element={<EditLap />}/>
         </Routes>
       </div>

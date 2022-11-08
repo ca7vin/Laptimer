@@ -41,6 +41,7 @@ class CreateLap extends React.Component {
             isLoaded: true,
           });
           console.log(result);
+          this.props.addLaptime(result.laptime);
         },
         (error) => {
           this.setState({

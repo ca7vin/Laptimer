@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const EditLap = () => {
+const EditLap = (props) => {
   let navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
+  // console.log(props.refreshLaptime);
   const [laptime, setLaptime] = useState([]);
 
   useEffect(() => {
     getLaptime();
   }, []);
-
+  // GET LAP TIME BACK
   const getLaptime = () => {
     fetch(`http://127.0.0.1:8000/api/laptime/` + id)
       .then((res) => res.json())
@@ -22,7 +23,7 @@ const EditLap = () => {
   const handleChange = (event) => {
     setLaptime({...laptime,[event.target.name]:event.target.value});
   };
-
+  // CREATE LAP TIME BACK
   const handleSubmit = (event) => {
     console.log(laptime);
     fetch(`http://127.0.0.1:8000/api/laptime/` + id, {
@@ -41,6 +42,7 @@ const EditLap = () => {
       .then(
         (result) => {
           console.log(result);
+          props.refreshLaptime(id, laptime.Pilote, laptime.Circuit, laptime.Voiture, laptime.Temps)
         },
         (error) => {
           setLaptime({
@@ -48,7 +50,7 @@ const EditLap = () => {
             error,
           });
         }
-      );
+        );
     event.preventDefault();
     navigate("/");
   }

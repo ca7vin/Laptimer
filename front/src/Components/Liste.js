@@ -1,7 +1,28 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 
 export default function Liste(props) {
+  const delLaptime = (id) => {
+    console.log(id);
+    console.log(props.removeLaptime)
+    fetch(`http://127.0.0.1:8000/api/laptime/` + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+          props.removeLaptime(id);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  };
+
   return (
     <table className="table mx-auto w-75">
       <thead>
@@ -24,8 +45,20 @@ export default function Liste(props) {
               <td>{laptime.Voiture}</td>
               <td>{laptime.Temps}</td>
               <td>
-                <button className="btn btn-outline-warning text-uppercase me-3">Edit</button>
-                <button className="btn btn-outline-danger text-uppercase">Delete</button>
+                <button className="btn btn-warning text-uppercase me-3">
+                  <Link
+                    className="text-decoration-none text-white"
+                    to={{ pathname: "laptime/edit/" + laptime.id }}
+                  >
+                    Edit
+                  </Link>
+                </button>
+                <button
+                  onClick={() => delLaptime(laptime.id)}
+                  className="btn btn-danger text-uppercase"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           );
